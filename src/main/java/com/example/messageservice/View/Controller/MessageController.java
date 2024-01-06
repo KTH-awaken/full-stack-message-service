@@ -14,13 +14,13 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
-@RequestMapping("/message")
+@RequestMapping
 public class MessageController {
 
     private final MessageService messageService;
 
 
-    @PostMapping
+    @PostMapping("/message")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<MessageVm> sendMessage(@RequestHeader("Authorization") String authHeader,@RequestBody MessageVm messageVm){
         System.out.println(messageVm);
@@ -29,18 +29,22 @@ public class MessageController {
 
 
 
-    @GetMapping("/chats")
+    @GetMapping("/message/chats")
     public ResponseEntity<List<ChatVm>> getChats(@RequestHeader("Authorization") String authHeader){
         String email = TokenDecoder.getEmailFromToken(authHeader);
         return ResponseEntity.ok(messageService.getChats(email, authHeader));
     }
 
-    @GetMapping("/chat/{participantId}")
+    @GetMapping("/message/chat/{participantId}")
     public ResponseEntity<List<MessageVm>> getChatByParticipantId(@PathVariable String participantId, @RequestHeader("Authorization") String authHeader){
         String email = TokenDecoder.getEmailFromToken(authHeader);
         return ResponseEntity.ok(messageService.getChatByParticipantId(email,participantId,authHeader));
     }
 
+    @GetMapping("/health")
+    public ResponseEntity<String> healthCheck(){
+        return ResponseEntity.ok("ok");
+    }
 
 
 }

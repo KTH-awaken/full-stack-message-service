@@ -18,8 +18,7 @@ public class SecurityConfig {
         return httpSecurity.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(httpRequests -> httpRequests
-//                        .requestMatchers("api/microservice/patient/**").hasAnyRole("patient")
-//                        .requestMatchers("api/microservice/doctor/**").hasAnyRole("doctor")
+                        .requestMatchers("/health").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer.jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(jwtAuthenticationConverter())))
