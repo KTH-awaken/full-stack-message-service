@@ -88,7 +88,7 @@ public class MessageService {
         return messageVms;
     }
     private AccountVm getUserByEmail(String email, String authHeader){
-        AccountVm user = webClientService.fetchUserFromUserService("http://user-service:8081/user/" + email, authHeader).block();
+        AccountVm user = webClientService.fetchUserFromUserService("https://health-user-service.app.cloud.cbh.kth.se/user/" + email, authHeader).block();
         return user;
     }
 
